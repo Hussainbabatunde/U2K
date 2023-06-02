@@ -2,6 +2,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import Home from "../screen/Home";
+import PaymentStatement from "../screen/PaymentStatement";
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 const Tab = createBottomTabNavigator();
 
@@ -21,55 +23,44 @@ export function TabNavigation() {
         component={Home}
         options={{
           title: "Home",
-          tabBarActiveTintColor: "#2e29f7",
+          tabBarActiveTintColor: "#1472CD",
           headerShown: false,
           tabBarIcon: ({ focused }) => {
             return (
               <FontAwesome
                 name="car"
                 size={30}
-                color={focused ? "#2e29f7" : "gray"}
-              />
-            );
-          },
-        }}
-      />
-      {/* <Tab.Screen
-        name="RiderTrips"
-        component={RiderTrips}
-        options={{
-          title: "Trips",
-          tabBarActiveTintColor: "#005091",
-          headerShown: false,
-          tabBarIcon: ({ focused }) => {
-            return (
-              <FontAwesome
-                name="car"
-                size={30}
-                color={focused ? "#005091" : "gray"}
+                color={focused ? "#1472CD" : "gray"}
               />
             );
           },
         }}
       />
       <Tab.Screen
-        name="RiderProfile"
-        component={RiderProfile}
+        name="Transactions"
+        component={PaymentStatement}
         options={{
-          title: "Profile",
-          tabBarActiveTintColor: "#005091",
-          headerShown: false,
+          title: "Transactions",
+          tabBarActiveTintColor: "#1472CD",
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#1472CD',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
           tabBarIcon: ({ focused }) => {
             return (
-              <Ionicons
-                name="person"
-                size={30}
-                color={focused ? "#005091" : "gray"}
+              <MaterialCommunityIcons
+                name="bank-transfer"
+                size={40}
+                color={focused ? "#1472CD" : "gray"}
               />
             );
           },
         }}
-      /> */}
+      />
     </Tab.Navigator>
   );
 }

@@ -6,6 +6,7 @@ import Register from '../screen/Register';
 import { TabNavigation } from './Tabnavigation';
 import Verification from '../screen/Verification';
 import OTPscreen from '../screen/OTPscreen';
+import ShareableQR from '../screen/ShareableQR';
 const Stack = createNativeStackNavigator();
 
 
@@ -57,13 +58,13 @@ export default function NavStack() {
               }}
             />
 
-            {/* <Stack.Screen
-              name="DriverTabNavigation"
-              component={DriverTabNavigation}
+            <Stack.Screen
+              name="ShareableQR"
+              component={ShareableQR}
               options={{
                 headerShown: false,
               }}
-            />             */}
+            />            
           </Stack.Navigator>
         </NavigationContainer>
   );
