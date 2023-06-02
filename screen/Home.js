@@ -7,20 +7,26 @@ import { StatusBar } from "expo-status-bar";
 import QRCode from "react-qr-code";
 import * as Print from 'expo-print';
 import Base64 from 'Base64';
+import { useNavigation } from "@react-navigation/native";
 
 const Home = () =>{
-
+    
+    const navigation = useNavigation()
     const data= "https/github:com";
     const encoded = Base64.btoa('sample string');
+    const handleStatement = () =>{
+        navigation.navigate('TabNavigation', {screen: 'Transactions'})
+    }
     const handlePrint = async () => {
-        const htmlContent = `
-          <html>
-            <body>
-              <img src="${encoded}" />
-            </body>
-          </html>
-        `;
-        await Print.printAsync({ html: htmlContent });
+        // const htmlContent = `
+        //   <html>
+        //     <body>
+        //       <img src="${encoded}" />
+        //     </body>
+        //   </html>
+        // `;
+        // await Print.printAsync({ html: htmlContent });
+        navigation.navigate('ShareableQR')
       }
 
 
@@ -38,7 +44,7 @@ const Home = () =>{
                 <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                     <Text style={{fontSize: 20, fontWeight:'bold'}}>My Wallet</Text>
                     <View style={{flexDirection:'row', alignItems:'center'}}>
-                        <AntDesign name="qrcode" size={30} style={{marginRight: 20}} color="#2e29f7" />
+                        <AntDesign name="qrcode" size={30} style={{marginRight: 20}} color="#1472CD" />
                         <Image source={Avatar} style={{height: 40, width: 40, borderRadius:50}}/>
                     </View>
                 </View>
@@ -54,8 +60,8 @@ const Home = () =>{
             </View>
             <View style={{marginTop: 40, padding: 15}}>
                 <Text style={{fontSize: 32, fontWeight: 'bold'}}>Hi, Rafeal!</Text>
-                <Text style={{fontSize: 32, fontWeight: 'bold', color:'#2e29f7'}}>You have</Text>
-                <Text style={{fontSize: 32, fontWeight: 'bold', color:'#2e29f7'}}>$ 6.305,24</Text>
+                <Text style={{fontSize: 32, fontWeight: 'bold', color:'#1472CD'}}>You have</Text>
+                <Text style={{fontSize: 32, fontWeight: 'bold', color:'#1472CD'}}>$ 6.305,24</Text>
                 <View style={{width:'60%', height:1, backgroundColor:"#c3c8c4", marginTop: 60 }}></View>
                 <TouchableOpacity>
                     <Text style={{fontSize: 22, marginTop: 10, color:'#7f8180'}}>Add money</Text>
@@ -63,7 +69,7 @@ const Home = () =>{
                 <TouchableOpacity>
                     <Text style={{fontSize: 22, marginTop: 10, color:'#7f8180'}}>Withdraw your balance</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleStatement}>
                     <Text style={{fontSize: 22, marginTop: 10, color:'#7f8180'}}>Check statement</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handlePrint}>

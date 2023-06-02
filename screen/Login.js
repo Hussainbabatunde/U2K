@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import backgroundimg from '../assets/backgroungimg.jpg'
 import QRCode from "react-qr-code";
 import { Entypo } from '@expo/vector-icons'; 
 import { useDispatch } from 'react-redux';
@@ -26,26 +27,23 @@ const Login = ({navigation}) =>{
             password: password
         }
         // console.log(details)
-        await dispatch(loginAuth(details))
-        // navigation.navigate('TabNavigation', {screen: 'Home' })
+        // await dispatch(loginAuth(details))
+        navigation.navigate('TabNavigation', {screen: 'Home' })
     }
 
     
     return(
-        <SafeAreaView style={{flex: 1, flexDirection: 'column', justifyContent:'center', alignItems:'center', padding: 15}}>
-            {/* <Text>Tunde</Text>
-            <QRCode 
-            style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-            value={data}
-             /> */}
+        <View style={{flex: 1}}>
+            <ImageBackground source={backgroundimg} resizeMode="cover" style={styles.child}>
+                <View style={styles.coverchild}>
              <View style={{width:'100%'}}>
-             <Text style={{color:"#cfd1d5", color:'#2e29f7'}}>Full Name</Text>
+             <Text style={{color:"white"}}>Full Name</Text>
              <TextInput placeholder='Phone number' onChangeText={setPhoneNumber} style={styles.container} />
              </View>
 
 
              <View style={{width:'100%', marginTop: 20}}>
-             <Text style={{color:"#cfd1d5", color:'#2e29f7'}}>Password</Text>
+             <Text style={{color:"white"}}>Password</Text>
              <View style={{ flexDirection: 'row', justifyContent:'center', alignItems:'center',
         borderBottomWidth: 1,
         borderColor: '#cfd1d5'}}>
@@ -63,7 +61,9 @@ const Login = ({navigation}) =>{
                 <Text style={{color:"#bcbdc0", fontSize: 15}}>New to U2K?</Text>
                 <Text style={{color:'#231dc6', textDecorationLine: 'underline',  fontSize: 15}} onPress={handleRegister}>Sign Up</Text>
              </View>
-        </SafeAreaView>
+             </View>
+                </ImageBackground>
+        </View>
     )
 }
 
@@ -82,6 +82,20 @@ const styles= StyleSheet.create({
         paddingBottom: 10,
         flex: 1
     },
+    child:{
+        // width: "100%",
+        // height: "55%"
+        flex: 1
+    },
+    coverchild: {
+    backgroundColor: 'rgba(0,0,0,0.8)',
+    width: "100%",
+    height: "100%", 
+    flexDirection: 'column', 
+    justifyContent:'center', 
+    alignItems:'center', 
+    padding: 15
+    },
     forgotpassword:{
         marginTop: 10,
         width: "100%",
@@ -89,7 +103,7 @@ const styles= StyleSheet.create({
         alignItems:'flex-end'
     },
     forgotText:{
-        color:'#231dc6'
+        color:'white'
     },
     loginbutton:{
         width:'100%',
