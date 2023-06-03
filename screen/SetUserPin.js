@@ -21,7 +21,7 @@ const SetUserPin = ({navigation}) =>{
 
     useEffect(()=>{
         if(SetPinDone == "Pin set successsfully") {            
-            navigation.navigate('TabNavigation', {screen: 'Transactions'})
+            navigation.navigate('AuthStack', {screen: 'Login'})
         }
     },[SetPinDone, navigation])
 

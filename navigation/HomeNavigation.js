@@ -3,6 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from '../screen/Home';
 import ScannedPage from '../screen/ScannedPage';
+import ShareableQR from '../screen/ShareableQR';
+import QRScanner from '../screen/BarcodeScanner';
 
 
 const Stack = createNativeStackNavigator();
@@ -37,6 +39,20 @@ export default function HomeStack() {
                     headerTitle: 'Payment'
                 }}
               />      
+              <Stack.Screen
+                name="ShareableQR"
+                component={ShareableQR}
+                options={{
+                  headerShown: false,
+                }}
+              /> 
+              <Stack.Screen
+                name="QRScanner"
+                component={QRScanner}
+                options={{
+                  headerShown: false,
+                }}
+              />
               </Stack.Navigator>
       );
     }

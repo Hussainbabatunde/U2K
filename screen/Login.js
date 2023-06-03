@@ -17,7 +17,7 @@ const Login = ({navigation}) =>{
     const [loading, setLoading] = useState(false)
 
     const handleRegister= () =>{
-        navigation.navigate('Register')
+        navigation.navigate('AuthStack', {screen: "Register"})
     }
     const loginInfo=  useSelector((state)=> state.LoginSlice?.logindata?.data);
 

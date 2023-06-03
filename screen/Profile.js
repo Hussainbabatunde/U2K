@@ -13,20 +13,23 @@ import {
 import IonIcon from "react-native-vector-icons/Ionicons";
 import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
+import { reset } from "../Slice/auth/Loginslice";
+import { reset as resetGetDetails } from "../Slice/auth/GetDetails";
 
 const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
       console.log("working");
-      dispatch(Logout_fuc());
+      await dispatch(reset())
+      await dispatch(resetGetDetails())
   };
 
   const [social, setSocial] = useState(false);
   const [support, setSupport] = useState(false);
 
-  const username = useSelector((state) => state.LoginSlice?.data?.user);
-  // console.log("user status ", username)
+  const username = useSelector((state) => state?.GetDetailsSlice?.getUserdata) ?? "";
+  console.log("user status ", username)
 
 
   return (
@@ -49,7 +52,7 @@ const Profile = ({ navigation }) => {
           /> */}
         </View>
         <View style={{ width: "75%" }}>
-          <Text style={{ color: "#fff", marginTop: 10 }}>{username?.name}</Text>
+          <Text style={{ color: "#fff", marginTop: 10 }}>tunde</Text>
           <View style={{ flexDirection: "row" }}>
             <View style={{ width: "50%" }}>
               <Text style={{ color: "#fff", marginTop: 4, fontSize: 13 }}>

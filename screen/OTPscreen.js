@@ -25,7 +25,7 @@ const OTPscreen = ({route, navigation}) => {
 
     useEffect(()=>{
         if(VerifyStatus == "Phone number verified successfully")
-        navigation.navigate("SetUserPin")
+        navigation.navigate("AuthStack",{screen: "SetUserPin"})
     },[VerifyStatus, navigation])
 
   
