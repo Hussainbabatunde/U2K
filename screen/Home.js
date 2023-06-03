@@ -29,6 +29,10 @@ const Home = () =>{
         navigation.navigate('ShareableQR')
       }
 
+      const handleQRScanner = () =>{
+        navigation.navigate("QRScanner")
+      }
+
 
     return(
         <SafeAreaView style={{flex: 1}}>
@@ -44,7 +48,7 @@ const Home = () =>{
                 <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                     <Text style={{fontSize: 20, fontWeight:'bold'}}>My Wallet</Text>
                     <View style={{flexDirection:'row', alignItems:'center'}}>
-                        <AntDesign name="qrcode" size={30} style={{marginRight: 20}} color="#1472CD" />
+                        <AntDesign name="qrcode" size={30} style={{marginRight: 20}} color="#1472CD" onPress={handleQRScanner} />
                         <Image source={Avatar} style={{height: 40, width: 40, borderRadius:50}}/>
                     </View>
                 </View>

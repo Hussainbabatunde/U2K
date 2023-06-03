@@ -7,6 +7,7 @@ import { TabNavigation } from './Tabnavigation';
 import Verification from '../screen/Verification';
 import OTPscreen from '../screen/OTPscreen';
 import ShareableQR from '../screen/ShareableQR';
+import QRScanner from '../screen/BarcodeScanner';
 const Stack = createNativeStackNavigator();
 
 
@@ -61,6 +62,14 @@ export default function NavStack() {
             <Stack.Screen
               name="ShareableQR"
               component={ShareableQR}
+              options={{
+                headerShown: false,
+              }}
+            /> 
+
+            <Stack.Screen
+              name="QRScanner"
+              component={QRScanner}
               options={{
                 headerShown: false,
               }}

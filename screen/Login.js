@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, Keyboard, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import backgroundimg from '../assets/backgroungimg.jpg'
 import QRCode from "react-qr-code";
@@ -33,12 +33,12 @@ const Login = ({navigation}) =>{
 
     
     return(
-        <View style={{flex: 1}}>
-            <ImageBackground source={backgroundimg} resizeMode="cover" style={styles.child}>
+        <Pressable onPress={Keyboard.dismiss}style={{flex: 1, backgroundColor: "#25C166"}}>
+            {/* <ImageBackground source={backgroundimg} resizeMode="cover" style={styles.child}> */}
                 <View style={styles.coverchild}>
              <View style={{width:'100%'}}>
              <Text style={{color:"white"}}>Full Name</Text>
-             <TextInput placeholder='Phone number' onChangeText={setPhoneNumber} style={styles.container} />
+             <TextInput onChangeText={setPhoneNumber} style={styles.container} />
              </View>
 
 
@@ -47,7 +47,7 @@ const Login = ({navigation}) =>{
              <View style={{ flexDirection: 'row', justifyContent:'center', alignItems:'center',
         borderBottomWidth: 1,
         borderColor: '#cfd1d5'}}>
-                <TextInput placeholder='Password' onChangeText={setPassword} style={styles.password} />
+                <TextInput onChangeText={setPassword} style={styles.password} />
                 <Entypo name="eye" size={24} color="#cfd1d5" />
              </View>
              </View>
@@ -59,11 +59,11 @@ const Login = ({navigation}) =>{
              </TouchableOpacity>
              <View style={styles.newsign}>
                 <Text style={{color:"#bcbdc0", fontSize: 15}}>New to U2K?</Text>
-                <Text style={{color:'#231dc6', textDecorationLine: 'underline',  fontSize: 15}} onPress={handleRegister}>Sign Up</Text>
+                <Text style={{color:'gray', textDecorationLine: 'underline',  fontSize: 15}} onPress={handleRegister}>Sign Up</Text>
              </View>
              </View>
-                </ImageBackground>
-        </View>
+                {/* </ImageBackground> */}
+        </Pressable>
     )
 }
 
@@ -88,7 +88,7 @@ const styles= StyleSheet.create({
         flex: 1
     },
     coverchild: {
-    backgroundColor: 'rgba(0,0,0,0.8)',
+    backgroundColor: 'rgba(0,0,0,0.6)',
     width: "100%",
     height: "100%", 
     flexDirection: 'column', 
@@ -107,10 +107,10 @@ const styles= StyleSheet.create({
     },
     loginbutton:{
         width:'100%',
-        backgroundColor:'#2e29f7',
+        backgroundColor:'black',
         justifyContent:'center',
         alignItems:'center',
-        padding: 10,
+        padding: 20,
         marginTop: 20,
         borderRadius: 10
     },

@@ -1,11 +1,13 @@
-import React, {useState} from "react";
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import React, {useEffect, useState} from "react";
+import { ActivityIndicator, ImageBackground, Keyboard, Pressable, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Ionicons } from '@expo/vector-icons'; 
 import CountryPicker from 'react-native-country-picker-modal';
 import { Entypo } from '@expo/vector-icons'; 
 import { Modal } from 'react-native';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RegisterAuth } from "../Slice/auth/Loginslice";
+import backgroundimg from '../assets/backgroungimg.jpg'
+import { useNavigation } from "@react-navigation/native";
 
 
 
@@ -14,6 +16,15 @@ const Register = ({navigation}) =>{
     const [phone_number, setPhoneNumber] = useState('')
     const [password, setPassword] = useState('')
     const [confirm_password, setConfirmPassword] = useState('')
+    const [loading, setLoading] = useState(false)
+    const RegisterData = useSelector((state)=> state?.LoginSlice?.registerdata)
+    // console.log('register info ', RegisterData)
+
+    useEffect(()=>{
+        if(RegisterData){
+            navigation.navigate('OTPscreen', {phone: phone_number})
+        }
+    },[RegisterData, navigation])
 
     const dispatch= useDispatch()
 
@@ -31,8 +42,9 @@ const Register = ({navigation}) =>{
             password_confirmation: confirm_password
         }
         // console.log(' details ', details)
-        // await dispatch(RegisterAuth(details))
-        navigation.navigate('OTPscreen')
+        setLoading(true)
+        await dispatch(RegisterAuth(details))
+        setLoading(false)
     }
 
 //     const [countryCode, setCountryCode] = useState('FR');
@@ -53,14 +65,16 @@ const Register = ({navigation}) =>{
 //   }
 
     return(
-        <SafeAreaView style={{flex:1, backgroundColor:'#2e29f7'}}>
-            <View style={{paddingHorizontal: 15, flexDirection:'row', alignItems:'center'}} onPress={handleBack}>
+        <Pressable onPress={Keyboard.dismiss} style={{flex:1, backgroundColor: "#25C166"}}>
+            {/* <ImageBackground source={backgroundimg} resizeMode="cover" style={styles.child}> */}
+                <View style={styles.coverchild}>
+            <View style={{paddingHorizontal: 15, flexDirection:'row', alignItems:'center', marginTop: 20, width: '100%'}} onPress={handleBack}>
             <Ionicons name="arrow-back" size={24} color="#cfd1d5" onPress={handleBack}/>
             <Text style={{color: '#cfd1d5', fontSize: 17}} onPress={handleBack}> Sign In</Text>
             </View>
-            <View style={{flex: 1, justifyContent:"center",  paddingHorizontal:15}}>
-                    <Text style={{color:"#cfd1d5"}}>Full Name</Text>
-            <TextInput placeholder='Full Name' onChangeText={setName} style={styles.container} />
+            <View style={{flex: 1, justifyContent:"center",  paddingHorizontal:15, width:'100%'}}>
+                    <Text style={{color:"#cfd1d5"}}>Username</Text>
+            <TextInput onChangeText={setName} style={styles.container} />
             
             <Text style={{color:"#cfd1d5", marginTop: 20}}>Phone Number</Text>
             <View onPress={() => setModalVisible(true)} style={{flexDirection:'row',borderBottomWidth: 1,
@@ -82,7 +96,7 @@ const Register = ({navigation}) =>{
 {countryCode !== null && (
         <Text style={{color:"#cfd1d5", fontSize: 17, marginTop: 6}}>{country?.cca2} {''}  {country?.callingCode} </Text>
       )} */}
-      <TextInput placeholder='Phone number' onChangeText={setPhoneNumber} style={{flex: 1,
+      <TextInput  onChangeText={setPhoneNumber} style={{flex: 1,
         fontSize: 18,
         padding: 5,
         paddingBottom: 10,
@@ -93,25 +107,27 @@ const Register = ({navigation}) =>{
             <View style={{ flexDirection: 'row', alignItems:'center',
         borderBottomWidth: 1,
         borderColor: '#cfd1d5'}}>
-                <TextInput placeholder='Password' onChangeText={setPassword} style={styles.password} />
+                <TextInput  onChangeText={setPassword} style={styles.password} />
                 <Entypo name="eye" size={24} color="#cfd1d5" />
              </View>
              <Text style={{color:"#cfd1d5", marginTop: 20}}>Confirm Password</Text>
             <View style={{ flexDirection: 'row', alignItems:'center',
         borderBottomWidth: 1,
         borderColor: '#cfd1d5'}}>
-                <TextInput placeholder='Password' onChangeText={setConfirmPassword} style={styles.password} />
+                <TextInput  onChangeText={setConfirmPassword} style={styles.password} />
                 <Entypo name="eye" size={24} color="#cfd1d5" />
              </View>
              <TouchableOpacity onPress={handleSubmit} style={styles.loginbutton}>
-                <Text style={{color:'#2e29f7', fontSize: 15}}>Sign Up</Text>
+                {loading? <ActivityIndicator size='small' color='white' /> :<Text style={{color:'white', fontSize: 15}}>Sign Up</Text>}
              </TouchableOpacity>
              <View style={styles.newsign}>
-                <Text style={{color:"#bcbdc0", fontSize: 15}}>New to U2K?</Text>
-                <Text style={{color:'gray', textDecorationLine: 'underline',  fontSize: 15}} onPress={handleRegister}>Sign Up</Text>
+                <Text style={{color:"#bcbdc0", fontSize: 15, marginRight: 10}}>New to U2K?</Text>
+                <Text style={{color:'gray', textDecorationLine: 'underline',  fontSize: 15}} onPress={handleRegister}>Sign In</Text>
              </View>
             </View>
-        </SafeAreaView>
+            </View>
+            {/* </ImageBackground> */}
+        </Pressable>
     )
 }
 
@@ -133,14 +149,26 @@ const styles= StyleSheet.create({
         flex: 1,
         color: '#cfd1d5'
     },
+    child:{
+        // width: "100%",
+        // height: "55%"
+        flex: 1
+    },
+    coverchild: {
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    width: "100%",
+    height: "100%", 
+    flexDirection: 'column', 
+    padding: 15
+    },
     loginbutton:{
         width:'100%',
-        backgroundColor:'white',
+        backgroundColor:'black',
         justifyContent:'center',
         alignItems:'center',
-        padding: 10,
+        padding: 20,
         marginTop: 20,
-        borderRadius: 10
+        borderRadius: 20
     },
     newsign:{
         marginTop: 10,
