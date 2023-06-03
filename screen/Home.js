@@ -1,33 +1,45 @@
-import React from "react";
-import { Image, SafeAreaView, ScrollView, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, Image, SafeAreaView, ScrollView, TouchableOpacity } from "react-native";
 import { Text, View } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import Avatar from '../assets/Avatar.png';
 import { StatusBar } from "expo-status-bar";
 import QRCode from "react-qr-code";
 import * as Print from 'expo-print';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Base64 from 'Base64';
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { reset } from "../Slice/auth/Loginslice";
+import Modal from "react-native-modal";
+import { GetWalletBalanceApi } from "../Slice/auth/GetDetails";
 
 const Home = () =>{
     
     const navigation = useNavigation()
-    const data= "https/github:com";
+    const dispatch = useDispatch()
+    const [loading, setLoading] = useState(false)
+    const data= useSelector((state)=> state.LoginSlice?.logindata?.data?.id);
+    const walletData= useSelector((state)=> state.GetDetailsSlice?.getWalletData?.data);
+
+
+    useEffect(()=>{
+        const getWallet = async () =>{
+            setLoading(true)
+            await dispatch(GetWalletBalanceApi())
+            setLoading(false)
+        }
+        getWallet()
+    },[])
+
     const encoded = Base64.btoa('sample string');
     const handleStatement = () =>{
         navigation.navigate('TabNavigation', {screen: 'Transactions'})
     }
     const handlePrint = async () => {
-        // const htmlContent = `
-        //   <html>
-        //     <body>
-        //       <img src="${encoded}" />
-        //     </body>
-        //   </html>
-        // `;
-        // await Print.printAsync({ html: htmlContent });
         navigation.navigate('ShareableQR')
       }
+    
 
       const handleQRScanner = () =>{
         navigation.navigate("QRScanner")
@@ -48,7 +60,7 @@ const Home = () =>{
                 <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                     <Text style={{fontSize: 20, fontWeight:'bold'}}>My Wallet</Text>
                     <View style={{flexDirection:'row', alignItems:'center'}}>
-                        <AntDesign name="qrcode" size={30} style={{marginRight: 20}} color="#1472CD" onPress={handleQRScanner} />
+                        <AntDesign name="qrcode" size={30} style={{marginRight: 20}} color="#2CAA38" onPress={handleQRScanner} />
                         <Image source={Avatar} style={{height: 40, width: 40, borderRadius:50}}/>
                     </View>
                 </View>
@@ -58,14 +70,14 @@ const Home = () =>{
             <QRCode 
             size={170}
             style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-            value={data}
+            value={JSON.stringify(data)}
              /> 
              <Text style={{marginTop: 10}}>Scan Barcode for Payment</Text>
             </View>
             <View style={{marginTop: 40, padding: 15}}>
                 <Text style={{fontSize: 32, fontWeight: 'bold'}}>Hi, Rafeal!</Text>
-                <Text style={{fontSize: 32, fontWeight: 'bold', color:'#1472CD'}}>You have</Text>
-                <Text style={{fontSize: 32, fontWeight: 'bold', color:'#1472CD'}}>$ 6.305,24</Text>
+                <Text style={{fontSize: 32, fontWeight: 'bold', color:'#2CAA38'}}>You have</Text>
+                <Text style={{fontSize: 32, fontWeight: 'bold', color:'#2CAA38'}}><MaterialCommunityIcons name="currency-ngn" size={30} color='#2CAA38' /> {walletData}</Text>
                 <View style={{width:'60%', height:1, backgroundColor:"#c3c8c4", marginTop: 60 }}></View>
                 <TouchableOpacity>
                     <Text style={{fontSize: 22, marginTop: 10, color:'#7f8180'}}>Add money</Text>
@@ -81,6 +93,10 @@ const Home = () =>{
                 </TouchableOpacity>
             </View>
             
+            <Modal isVisible={loading}>
+                    <ActivityIndicator size='large' color='white' />
+             </Modal>
+
             </ScrollView>
         </SafeAreaView>
     )

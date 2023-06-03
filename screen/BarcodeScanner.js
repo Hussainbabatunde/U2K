@@ -36,18 +36,16 @@ function QRScanner() {
     
   console.log(data)
 
-    if (data.indexOf(theWord) !== -1) {
-      navigation.navigate("AppNavigator", { screen: "Home" , params:{
-        screen: "ListingDeep", 
+    if (data) {
+      navigation.navigate("TabNavigation", { screen: "Home" , params:{
+        screen: "ScannedPage",
         params: {data}
       } })
+      // console.log(data)
       // Linking.openURL(data);
     } else {
-      alert(`Oops! Invalid code. Please find a Popat event code!`);
-      alert(`Sorry! Ticket ${type} is not valid.  and data ${data} has been scanned!`);
-    alert(
-      `Sorry! Ticket ${data} is not valid. Please provide an authentic ticket!`
-    );
+      alert(`Oops! Invalid code. Please find a U2K QR code!`);
+      
     }
 
     

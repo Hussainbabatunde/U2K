@@ -1,14 +1,16 @@
 import React, { useRef } from 'react';
 import { Alert, ImageBackground, PermissionsAndroid, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import qrfirstbg from '../assets/qrfirstbg.jpg'
+import qrfirstbg from '../assets/greenbackground.jpg'
 import QRCode from "react-qr-code";
 import * as MediaLibrary from 'expo-media-library';
 import { captureRef } from 'react-native-view-shot';
+import { useSelector } from 'react-redux';
 
 const ShareableQR = () =>{
-
-        const data= "https/github:com";
+    const UserInfo= useSelector((state)=> state.LoginSlice?.logindata?.data);
+        const data= useSelector((state)=> state.LoginSlice?.logindata?.data?.id);
         const viewRef = useRef()
+        // console.log(UserInfo)
 
         const getPermissionAndroid = async () => {
     try {
@@ -74,9 +76,9 @@ const ShareableQR = () =>{
                         <QRCode 
                             size={300}
                             style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-                        value={data}
+                        value={JSON.stringify(data)}
              /> 
-             <Text style={{marginTop: 10, fontSize: 20}}>Name: Hussain Babatunde</Text>
+             <Text style={{marginTop: 10, fontSize: 20}}>Name: {UserInfo?.name}</Text>
              <Text style={{ fontSize: 20}}>Payment system: U2K</Text>
                     </View>
                     </View>

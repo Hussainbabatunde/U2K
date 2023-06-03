@@ -8,6 +8,7 @@ import Verification from '../screen/Verification';
 import OTPscreen from '../screen/OTPscreen';
 import ShareableQR from '../screen/ShareableQR';
 import QRScanner from '../screen/BarcodeScanner';
+import SetUserPin from '../screen/SetUserPin';
 const Stack = createNativeStackNavigator();
 
 
@@ -23,6 +24,16 @@ export default function NavStack() {
             <Stack.Screen
               name="Login"
               component={Login}
+              options={{
+                headerShown: false,
+                headerStyle: {
+                  backgroundColor: "white",
+                },
+              }}
+            />
+            <Stack.Screen
+              name="SetUserPin"
+              component={SetUserPin}
               options={{
                 headerShown: false,
                 headerStyle: {

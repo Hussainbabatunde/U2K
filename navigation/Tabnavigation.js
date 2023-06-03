@@ -4,6 +4,8 @@ import { Ionicons } from "@expo/vector-icons";
 import Home from "../screen/Home";
 import PaymentStatement from "../screen/PaymentStatement";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import HomeStack from "./HomeNavigation";
+import Profile from "../screen/Profile";
 
 const Tab = createBottomTabNavigator();
 
@@ -14,23 +16,23 @@ export function TabNavigation() {
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
-        tabBarActiveTintColor: "rgba(72, 130, 101, 0.5)",
+        tabBarActiveTintColor: "#2CAA38",
         tabBarShowLabel: true,
       }}
     >
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={HomeStack}
         options={{
           title: "Home",
-          tabBarActiveTintColor: "#1472CD",
+          tabBarActiveTintColor: "#2CAA38",
           headerShown: false,
           tabBarIcon: ({ focused }) => {
             return (
               <FontAwesome
                 name="car"
                 size={30}
-                color={focused ? "#1472CD" : "gray"}
+                color={focused ? "#2CAA38" : "gray"}
               />
             );
           },
@@ -41,10 +43,10 @@ export function TabNavigation() {
         component={PaymentStatement}
         options={{
           title: "Transactions",
-          tabBarActiveTintColor: "#1472CD",
+          tabBarActiveTintColor: "#2CAA38",
           headerShown: true,
           headerStyle: {
-            backgroundColor: '#1472CD',
+            backgroundColor: '#2CAA38',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -55,7 +57,25 @@ export function TabNavigation() {
               <MaterialCommunityIcons
                 name="bank-transfer"
                 size={40}
-                color={focused ? "#1472CD" : "gray"}
+                color={focused ? "#2CAA38" : "gray"}
+              />
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          title: "Profile",
+          tabBarActiveTintColor: "#2CAA38",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => {
+            return (
+              <Ionicons
+              name="person"
+                size={30}
+                color={focused ? "#2CAA38" : "gray"}
               />
             );
           },

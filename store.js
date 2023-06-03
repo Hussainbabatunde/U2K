@@ -6,10 +6,12 @@ import {
   persistReducer,
 } from "redux-persist";
 import { combineReducers } from "redux";
+import GetDetailsSlice from './Slice/auth/GetDetails'
 
 
 const reducers = combineReducers({
   LoginSlice: LoginSlice,
+  GetDetailsSlice: GetDetailsSlice
 });
 
 const persistConfig = {

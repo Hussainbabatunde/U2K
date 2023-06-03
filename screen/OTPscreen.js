@@ -19,13 +19,13 @@ const OTPscreen = ({route, navigation}) => {
     const [loading, setLoading] = useState(false)
     const VerifyStatus = useSelector((state)=> state?.LoginSlice?.verifyData?.message)
 
-    useEffect(()=>{
-        dispatch(reset())
-    },[])
+    // useEffect(()=>{
+    //     dispatch(reset())
+    // },[])
 
     useEffect(()=>{
         if(VerifyStatus == "Phone number verified successfully")
-        navigation.navigate("Login")
+        navigation.navigate("SetUserPin")
     },[VerifyStatus, navigation])
 
   
