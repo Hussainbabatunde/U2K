@@ -22,17 +22,17 @@ const Register = ({navigation}) =>{
 
     useEffect(()=>{
         if(RegisterData){
-            navigation.navigate('OTPscreen', {phone: phone_number})
+            navigation.navigate('AuthStack', {screen : "OTPscreen",params : {phone: phone_number}})
         }
     },[RegisterData, navigation])
 
     const dispatch= useDispatch()
 
     const handleBack = () =>{
-        navigation.navigate('Login')
+        navigation.navigate('AuthStack', {screen: 'Login'})
     }
     const handleRegister= () =>{
-        navigation.navigate('Login')
+        navigation.navigate('AuthStack', {screen: 'Login'})
     }
     const handleSubmit= async() =>{
         const details = {

@@ -17,6 +17,7 @@ const initialState = {
   logindata: null,
   registerdata:null,
   verifyData: null,
+  setPinData: null,
 };
 export const RegisterAuth = createAsyncThunk(
     "register/userRegister",
@@ -55,10 +56,9 @@ export const RegisterAuth = createAsyncThunk(
 export const loginAuth = createAsyncThunk(
     "login/userlogin",
     async (details, { rejectWithValue }) => {
-        console.log('details ', details)
-        console.log('process env ', U2K_APIKEY)
     //   const tokengot = await AsyncStorage.getItem("token");
     //   const infoneeded = `Bearer ${tokengot}`;
+    console.log(details)
       const instance = axios.create({
         baseURL: U2K_APIKEY,
         timeout: 20000,
@@ -66,12 +66,12 @@ export const loginAuth = createAsyncThunk(
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          Authorization: infoneeded,
         },
       });
       return await instance
         .post("/users/login", details)
         .then(async (response) => {
+          await AsyncStorage.setItem("token", response.data?.extra?.token);
             // console.log("respone login ", response.data)
           return response.data;
         })
@@ -111,6 +111,39 @@ export const loginAuth = createAsyncThunk(
         .catch((err) => {
           let errdata = err.response.data;
           console.log('error ', errdata)
+          return rejectWithValue(errdata);
+          // console.log(err)
+        });
+    }
+  );
+
+  export const SetPinApi = createAsyncThunk(
+    "setPin/userSetPin",
+    async (details, { rejectWithValue }) => {
+        // console.log("slice ",details)
+      const tokengot = await AsyncStorage.getItem("token");
+      const infoneeded = `Bearer ${tokengot}`;
+      const instance = axios.create({
+        baseURL: U2K_APIKEY,
+        timeout: 20000,
+  
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: infoneeded
+        },
+      });
+      return await instance
+        .put("/users/pin", details)
+        .then(async (response) => {
+            console.log("response register ", response.data)
+          return response.data;
+        })
+  
+        .catch((err) => {
+          let errdata = err.response.data;
+          console.log('error ', errdata)
+          Alert.alert(`${errdata.message}`)
           return rejectWithValue(errdata);
           // console.log(err)
         });
@@ -170,6 +203,22 @@ export const LoginSlice = createSlice({
         state.verifyData = action.payload;
       })
       .addCase(VerifyAuth.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = false;
+      })
+      .addCase(SetPinApi.pending, (state) => {
+        state.isLoading = true;
+        state.null = true;
+      })
+      .addCase(SetPinApi.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.loginuser = true;
+        state.setPinData = action.payload;
+      })
+      .addCase(SetPinApi.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

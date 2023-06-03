@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { ImageBackground, Keyboard, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, ImageBackground, Keyboard, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import backgroundimg from '../assets/backgroungimg.jpg'
 import QRCode from "react-qr-code";
 import { Entypo } from '@expo/vector-icons'; 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginAuth } from '../Slice/auth/Loginslice';
 
 
@@ -14,10 +14,20 @@ const Login = ({navigation}) =>{
 
     const [phone_number, setPhoneNumber] = useState('')
     const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const handleRegister= () =>{
-        navigation.navigate('Register')
+        navigation.navigate('AuthStack', {screen: "Register"})
     }
+    const loginInfo=  useSelector((state)=> state.LoginSlice?.logindata?.data);
+
+    useEffect(()=>{
+        if(loginInfo) {            
+        navigation.navigate('TabNavigation', {screen: 'Home', params:{
+            screen: 'MainHome'
+        } })
+        }
+    },[loginInfo, navigation])
 
     const dispatch = useDispatch()
 
@@ -27,8 +37,9 @@ const Login = ({navigation}) =>{
             password: password
         }
         // console.log(details)
-        // await dispatch(loginAuth(details))
-        navigation.navigate('TabNavigation', {screen: 'Home' })
+        setLoading(true)
+        await dispatch(loginAuth(details))
+        setLoading(false)
     }
 
     
@@ -37,7 +48,7 @@ const Login = ({navigation}) =>{
             {/* <ImageBackground source={backgroundimg} resizeMode="cover" style={styles.child}> */}
                 <View style={styles.coverchild}>
              <View style={{width:'100%'}}>
-             <Text style={{color:"white"}}>Full Name</Text>
+             <Text style={{color:"white"}}>Phone Number</Text>
              <TextInput onChangeText={setPhoneNumber} style={styles.container} />
              </View>
 
@@ -55,7 +66,7 @@ const Login = ({navigation}) =>{
                 <Text style={styles.forgotText}>Forgot password?</Text>
              </View>
              <TouchableOpacity style={styles.loginbutton} onPress={handleLogin}>
-                <Text style={{color:'white', fontSize: 15}}>Login</Text>
+             {loading? <ActivityIndicator size='small' color='white' /> :<Text style={{color:'white', fontSize: 15}}>Login</Text>}
              </TouchableOpacity>
              <View style={styles.newsign}>
                 <Text style={{color:"#bcbdc0", fontSize: 15}}>New to U2K?</Text>
