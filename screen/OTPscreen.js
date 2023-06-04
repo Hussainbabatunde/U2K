@@ -1,12 +1,14 @@
 import { StatusBar } from 'expo-status-bar'
 import React, { useEffect, useRef, useState } from 'react'
-import { Pressable, StyleSheet, Text, View, Keyboard, TouchableOpacity, ImageBackground, ActivityIndicator } from 'react-native'
+import { Pressable, StyleSheet, Text, View, Keyboard, TouchableOpacity, ImageBackground, ActivityIndicator, Image } from 'react-native'
 import HiddenTextInput from '../Components/OTPscreen/HiddenTextInput'
 import backgroundimg from '../assets/verifybackgroung.jpg'
 import { useDispatch, useSelector } from 'react-redux'
 import { VerifyAuth } from '../Slice/auth/Loginslice'
 import {reset } from "../Slice/auth/Loginslice"
-
+import u2kLogo from '../assets/u2k.png'
+import { reset as resetGetDetails } from "../Slice/auth/GetDetails";
+import { reset as resetPaymentSlice } from "../Slice/auth/PaymentSlice";
 
 
 const OTPscreen = ({route, navigation}) => {
@@ -56,6 +58,15 @@ const OTPscreen = ({route, navigation}) => {
         return ()=> setPinReady(false)
     }, [code])
 
+    useEffect(()=>{
+        const work= async() =>{
+      await dispatch(reset())
+      await dispatch(resetGetDetails())
+      await dispatch(resetPaymentSlice())
+        }
+        work()
+    },[])
+
 
     const toCodeDigitInput = (value, index) =>{
         const exptyInputChar = ' ';
@@ -81,6 +92,7 @@ const OTPscreen = ({route, navigation}) => {
         <StatusBar style='auto' />
         {/* <ImageBackground source={backgroundimg} resizeMode="cover" style={styles.child}> */}
                 <View style={styles.coverchild}>
+                    <Image source={u2kLogo} style={{marginBottom: 5}}  />
         <Text style={styles.text}>Enter the received OTP</Text>
         <View style={styles.OTPInputSection}>
         <Pressable style={styles.InputContainer} onPress={handleOnPress} >

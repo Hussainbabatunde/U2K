@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, FlatList, RefreshControl, Text, TextInput } from "react-native";
+import { ActivityIndicator, Alert, FlatList, TouchableOpacity, RefreshControl, Text, TextInput } from "react-native";
 import { View } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { StyleSheet } from "react-native";
 import Modal from "react-native-modal";
 import { AntDesign } from '@expo/vector-icons'; 

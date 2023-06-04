@@ -20,11 +20,11 @@ const Register = ({navigation}) =>{
     const RegisterData = useSelector((state)=> state?.LoginSlice?.registerdata)
     // console.log('register info ', RegisterData)
 
-    useEffect(()=>{
-        if(RegisterData){
-            navigation.navigate('AuthStack', {screen : "OTPscreen",params : {phone: phone_number}})
-        }
-    },[RegisterData, navigation])
+    // useEffect(()=>{
+    //     if(RegisterData){
+    //         navigation.navigate('AuthStack', {screen : "OTPscreen",params : {phone: phone_number}})
+    //     }
+    // },[RegisterData, navigation])
 
     const dispatch= useDispatch()
 
@@ -45,6 +45,7 @@ const Register = ({navigation}) =>{
         setLoading(true)
         await dispatch(RegisterAuth(details))
         setLoading(false)
+        navigation.navigate('AuthStack', {screen : "OTPscreen",params : {phone: phone_number}})
     }
 
 //     const [countryCode, setCountryCode] = useState('FR');

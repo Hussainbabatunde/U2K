@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Image, SafeAreaView, ScrollView, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Image, Platform, SafeAreaView, ScrollView, TouchableOpacity } from "react-native";
 import { Text, View } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import Avatar from '../assets/Avatar.png';
@@ -74,7 +74,7 @@ const Home = () =>{
     // shadowOpacity: 0.3,
     // shadowRadius: 2,
     }}>
-                <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                <View style={{flexDirection:'row', justifyContent:'space-between', marginTop: Platform.OS == 'ios' ? 0: 40}}>
                     <Text style={{fontSize: 20, fontWeight:'bold'}}>My Wallet</Text>
                     <View style={{flexDirection:'row', alignItems:'center'}}>
                         <AntDesign name="qrcode" size={30} style={{marginRight: 20}} color="#2CAA38" onPress={handleQRScanner} />

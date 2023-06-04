@@ -22,7 +22,6 @@ const initialState = {
 export const RegisterAuth = createAsyncThunk(
     "register/userRegister",
     async (details, { rejectWithValue }) => {
-        console.log('register details ', details)
     //   const tokengot = await AsyncStorage.getItem("token");
     //   const infoneeded = `Bearer ${tokengot}`;
       const instance = axios.create({
@@ -37,7 +36,7 @@ export const RegisterAuth = createAsyncThunk(
       return await instance
         .post("/users", details)
         .then(async (response) => {
-            console.log("respone register ", response.data)
+            // console.log("respone register ", response.data)
             Alert.alert('Registration Successfull')
           return response.data;
         })

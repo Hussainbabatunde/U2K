@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, ImageBackground, Keyboard, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, Image, ImageBackground, Keyboard, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import backgroundimg from '../assets/backgroungimg.jpg'
 import QRCode from "react-qr-code";
 import { Entypo } from '@expo/vector-icons'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { SetPinApi, loginAuth } from '../Slice/auth/Loginslice';
+import u2kLogo from '../assets/u2k.png'
 
 
 const SetUserPin = ({navigation}) =>{
@@ -53,6 +54,7 @@ const SetUserPin = ({navigation}) =>{
         <Pressable onPress={Keyboard.dismiss}style={{flex: 1, backgroundColor: "#25C166"}}>
             {/* <ImageBackground source={backgroundimg} resizeMode="cover" style={styles.child}> */}
                 <View style={styles.coverchild}>
+                    <Image source={u2kLogo} style={{marginBottom: 5}}  />
              <View style={{width:'100%'}}>
              <Text style={{color:"white"}}>Transaction Pin</Text>
              <TextInput 
@@ -95,7 +97,8 @@ const styles= StyleSheet.create({
         borderColor: '#cfd1d5',
         fontSize: 18,
         padding: 5,
-        paddingBottom: 10
+        paddingBottom: 10,
+        color:'white'
     },
     password:{
         fontSize: 18,

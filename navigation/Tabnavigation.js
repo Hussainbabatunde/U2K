@@ -6,6 +6,7 @@ import PaymentStatement from "../screen/PaymentStatement";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import HomeStack from "./HomeNavigation";
 import Profile from "../screen/Profile";
+import { FontAwesome5 } from '@expo/vector-icons'; 
 
 const Tab = createBottomTabNavigator();
 
@@ -29,8 +30,8 @@ export function TabNavigation() {
           headerShown: false,
           tabBarIcon: ({ focused }) => {
             return (
-              <FontAwesome
-                name="car"
+              <FontAwesome5
+                name="money-check"
                 size={30}
                 color={focused ? "#2CAA38" : "gray"}
               />

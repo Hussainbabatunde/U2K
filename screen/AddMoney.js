@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Text, TextInput } from "react-native";
+import { ActivityIndicator, Alert, Text, TextInput, TouchableOpacity } from "react-native";
 import { View } from "react-native";
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { StyleSheet } from "react-native";
 import Modal from "react-native-modal";
 // import  { Paystack , paystackProps}  from 'react-native-paystack-webview';
@@ -62,6 +61,7 @@ const AddMoney = ({route, navigation}) =>{
       const handlePayNow = async () =>{
         const details = {}
         details.amount = amt
+        console.log('it works')
         setLoading(true)
         await dispatch(AddMoneyApi(details))
         await dispatch(GetWalletBalanceApi())
@@ -112,7 +112,6 @@ const AddMoney = ({route, navigation}) =>{
             />
         </View>
             <TouchableOpacity style={styles.loginbutton}
-            //  onPress={()=> paystackWebViewRef.current.startTransaction()}
              onPress={handlePayNow}
              >
                 {loading? <ActivityIndicator size='small' color='white' /> :<Text style={{color:'white', fontSize: 15}}>Pay Now</Text>}
