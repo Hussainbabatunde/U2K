@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { StyleSheet } from "react-native";
 import Modal from "react-native-modal";
+import { AntDesign } from '@expo/vector-icons'; 
 // import  { Paystack , paystackProps}  from 'react-native-paystack-webview';
 import { useDispatch, useSelector } from "react-redux";
 import { GetUserDetails, GetWalletBalanceApi, TransferAmountApi } from "../Slice/auth/GetDetails";
@@ -28,6 +29,7 @@ const WithdrawMoney = ({route, navigation}) =>{
 
     const banks = useSelector((state) => state.PaymentSlice?.banksData?.data)
     const AccUserName = useSelector((state) => state.PaymentSlice?.verifyAcc)
+    const WithdrawStatus = useSelector((state)=> state.PaymentSlice?.withdrawalData)
 // console.log(banks)
     useEffect(()=>{
         const banksAvailable = async () =>{
@@ -64,8 +66,10 @@ const WithdrawMoney = ({route, navigation}) =>{
         else{
           setWithdrawLoader(true)
         await dispatch(WithdrawMoneyApi(detailsSent))
+        await dispatch(GetWalletBalanceApi())
         setWithdrawLoader(false)
         setIsModalVisible(false)
+        setPage(3)
         setAmt('')
         }
       }
@@ -106,6 +110,8 @@ const WithdrawMoney = ({route, navigation}) =>{
                 )}} />
                 </View>}
       
+        
+
         {page == 2 && <View style={{backgroundColor:'#CED4CE ', flex: 1}}>
 
 <Modal isVisible={isModalVisible}>
@@ -187,6 +193,21 @@ const WithdrawMoney = ({route, navigation}) =>{
                     <ActivityIndicator size='large' color='white' />
              </Modal> */}
         </View>}
+
+        {page == 3 && 
+            <View style={{flex: 1, alignItems:'center'}}>
+            <AntDesign name="checkcircle" style={{marginTop: 20}} size={94} color="#2CAA38" />
+            <Text style={{fontSize: 25, marginTop: 10}}>{WithdrawStatus?.message}</Text>
+
+            <TouchableOpacity style={styles.loginbutton}
+             onPress={()=> navigation.navigate('TabNavigation', {screen: 'Home', params:{
+              screen:"MainHome"
+          }})}
+             >
+                <Text style={{color:'white', fontSize: 15}}>Continue</Text>
+             </TouchableOpacity>
+        </View>
+        }
         </View>
     )
 }

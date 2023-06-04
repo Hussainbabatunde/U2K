@@ -21,7 +21,8 @@ const Home = () =>{
     const [loading, setLoading] = useState(false)
     const data= useSelector((state)=> state.LoginSlice?.logindata?.data?.id) ?? '0';
     const walletData= useSelector((state)=> state.GetDetailsSlice?.getWalletData?.data);
-
+    const UserInfo= useSelector((state)=> state.LoginSlice?.logindata)
+// console.log(UserInfo)
 
     useEffect(()=>{
         const getWallet = async () =>{
@@ -91,7 +92,7 @@ const Home = () =>{
              <Text style={{marginTop: 10}}>Scan Barcode for Payment</Text>
             </View>
             <View style={{marginTop: 40, padding: 15}}>
-                <Text style={{fontSize: 32, fontWeight: 'bold'}}>Hi, Rafeal!</Text>
+                <Text style={{fontSize: 32, fontWeight: 'bold'}}>Hi, {UserInfo?.data?.name}!</Text>
                 <Text style={{fontSize: 32, fontWeight: 'bold', color:'#2CAA38'}}>You have</Text>
                 <Text style={{fontSize: 32, fontWeight: 'bold', color:'#2CAA38'}}><MaterialCommunityIcons name="currency-ngn" size={30} color='#2CAA38' /> {walletData?.balance}</Text>
                 <View style={{width:'60%', height:1, backgroundColor:"#c3c8c4", marginTop: 60 }}></View>

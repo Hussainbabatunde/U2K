@@ -102,7 +102,7 @@ export const AddMoneyApi = createAsyncThunk(
       return await instance
         .post("/banks/verify", details)
         .then(async (response) => {
-            console.log("banks verify ", response.data)
+            // console.log("banks verify ", response.data)
           return response.data;
         })
   
@@ -134,7 +134,7 @@ export const AddMoneyApi = createAsyncThunk(
       return await instance
         .post("/users/wallet/withdraw", details)
         .then(async (response) => {
-            console.log("withdrawal ", response.data)
+            // console.log("withdrawal ", response.data)
             Alert.alert(`${response.data?.message}`)
           return response.data;
         })
