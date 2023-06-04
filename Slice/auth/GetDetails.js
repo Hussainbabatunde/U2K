@@ -16,6 +16,7 @@ const initialState = {
   message: null,
   getUserdata: null,
   getWalletData: null,
+  transferData: null
 };
 export const GetUserDetails = createAsyncThunk(
     "getUser/userGetUser",
@@ -67,13 +68,57 @@ export const GetUserDetails = createAsyncThunk(
       return await instance
         .get("/users/wallet/balance")
         .then(async (response) => {
-            console.log("wallet balance ", response.data)
+            // console.log("wallet balance ", response.data)
           return response.data;
         })
   
         .catch((err) => {
           let errdata = err.response.data;
           console.log('error ', errdata)
+          return rejectWithValue(errdata);
+          // console.log(err)
+        });
+    }
+  );
+
+  export const TransferAmountApi = createAsyncThunk(
+    "transferAmt/userTransferAmt",
+    async (details, { rejectWithValue }) => {
+      const tokengot = await AsyncStorage.getItem("token");
+      const infoneeded = `Bearer ${tokengot}`;
+      const instance = axios.create({
+        baseURL: U2K_APIKEY,
+        timeout: 20000,
+  
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: infoneeded
+        },
+      });
+      return await instance
+        .post("/users/wallet/transfer", details)
+        .then(async (response) => {
+            console.log("transfer done ", response.data)
+            // Alert.alert(`${response.data.message}`,
+            // [
+            //   {
+            //     text: 'OK',
+            //     onPress: () => navigation.navigate('TabNavigation', {
+            //       screen: 'Home',
+            //       params: {
+            //         screen: 'MainHome'
+            //       }
+            //     }),
+            //   },
+            // ])
+          return response.data;
+        })
+  
+        .catch((err) => {
+          let errdata = err.response.data;
+          console.log('error ', errdata)
+          Alert.alert('Value must be in 2 decimal places')
           return rejectWithValue(errdata);
           // console.log(err)
         });
@@ -119,6 +164,22 @@ export const GetDetailsSlice = createSlice({
         state.getWalletData = action.payload;
       })
       .addCase(GetWalletBalanceApi.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.registeruser = false;
+      })
+      .addCase(TransferAmountApi.pending, (state) => {
+        state.isLoading = true;
+        state.null = true;
+      })
+      .addCase(TransferAmountApi.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = true;
+        state.transferData = action.payload;
+      })
+      .addCase(TransferAmountApi.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

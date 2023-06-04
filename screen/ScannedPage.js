@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Text, TextInput } from "react-native";
+import { ActivityIndicator, Alert, Text, TextInput } from "react-native";
 import { View } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { StyleSheet } from "react-native";
 import Modal from "react-native-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { GetUserDetails } from "../Slice/auth/GetDetails";
+import { GetUserDetails, TransferAmountApi } from "../Slice/auth/GetDetails";
 
-const ScannedPage = ({route}) =>{
+const ScannedPage = ({route, navigation}) =>{
     const [inputValue, setInputValue] = useState('');
     const dispatch = useDispatch()
     const [isModalVisible, setModalVisible] = useState(false);
     const {data} = route.params
+    const [amt, setAmt] = useState('')
+    const [loading, setLoading] = useState(false)
+    const [success, setSuccess] = useState(false)
     const gottenInfo = useSelector((state)=> state.GetDetailsSlice?.getUserdata)
+    const transferStatus = useSelector((state) => state.GetDetailsSlice?.transferData)
     // console.log(data)
     useEffect(()=>{
         const dataInfo = async () =>{
@@ -24,10 +28,26 @@ const ScannedPage = ({route}) =>{
         dataInfo()
     },[])
 
-    const handleChange = (text) => {
-          setInputValue(text);
-      };
+    useEffect(()=>{
+        if(transferStatus?.message == "Transfer successful!"){
+            navigation.navigate("TabNavigation", {screen: 'Home', params:{
+                screen:'Successful'
+            }})
+        }
+    },[transferStatus, navigation ])
 
+    const handleChange = (text) => {
+          setAmt(text);
+      };
+      const handlePayNow = async () =>{
+        const details = {}
+        details.recipient_id = data
+        details.amount = amt
+        // console.log(details)
+        setLoading(true)
+        await dispatch(TransferAmountApi(details))
+        setLoading(false)
+      }
     return(
         <View style={{backgroundColor:'#CED4CE ', flex: 1}}>
         <View style={{borderBottomColor:'gray', borderBottomWidth: 1, padding: 10, justifyContent:"center", alignItems:"center", backgroundColor:"white"}}>
@@ -39,24 +59,28 @@ const ScannedPage = ({route}) =>{
         <TextInput 
         style={{flex: 1}}
             keyboardType="numeric"
-            value={inputValue}
+            value={amt}               
+            returnKeyType="done" 
             placeholder="0.00"
             onChangeText={handleChange}
             />
         </View>
-        <Text style={{marginTop: 20, marginLeft: 15}}>Name:</Text>
+        <Text style={{marginTop: 20, marginLeft: 15}}>Recipient Name:</Text>
         <View style={{flexDirection:'row', padding: 5, borderWidth: 1, backgroundColor:'white', marginTop: 5, justifyContent:'space-between'}}>
         <Text style={{ marginLeft: 5}}>{gottenInfo?.data?.name}</Text>
             </View>
-            <Text style={{marginTop: 20, marginLeft: 15}}>Phone Number:</Text>
+            <Text style={{marginTop: 20, marginLeft: 15}}>Recipient Phone Number:</Text>
         <View style={{flexDirection:'row', padding: 5, borderWidth: 1, backgroundColor:'white', marginTop: 5, justifyContent:'space-between'}}>
         <Text style={{ marginLeft: 5}}>+{gottenInfo?.data?.phone_number}</Text>
             </View>
-            <TouchableOpacity style={styles.loginbutton}>
+            <TouchableOpacity style={styles.loginbutton} onPress={handlePayNow}>
                 <Text style={{color:'white', fontSize: 15}}>Pay Now</Text>
              </TouchableOpacity>
 
              <Modal isVisible={isModalVisible}>
+                    <ActivityIndicator size='large' color='white' />
+             </Modal>
+             <Modal isVisible={loading}>
                     <ActivityIndicator size='large' color='white' />
              </Modal>
         </View>

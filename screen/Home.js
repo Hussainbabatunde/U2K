@@ -61,7 +61,7 @@ const Home = () =>{
                     <Text style={{fontSize: 20, fontWeight:'bold'}}>My Wallet</Text>
                     <View style={{flexDirection:'row', alignItems:'center'}}>
                         <AntDesign name="qrcode" size={30} style={{marginRight: 20}} color="#2CAA38" onPress={handleQRScanner} />
-                        <Image source={Avatar} style={{height: 40, width: 40, borderRadius:50}}/>
+                        {/* <Image source={Avatar} style={{height: 40, width: 40, borderRadius:50}}/> */}
                     </View>
                 </View>
             </View>
