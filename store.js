@@ -7,11 +7,13 @@ import {
 } from "redux-persist";
 import { combineReducers } from "redux";
 import GetDetailsSlice from './Slice/auth/GetDetails'
+import PaymentSlice from './Slice/auth/PaymentSlice'
 
 
 const reducers = combineReducers({
   LoginSlice: LoginSlice,
-  GetDetailsSlice: GetDetailsSlice
+  GetDetailsSlice: GetDetailsSlice,
+  PaymentSlice: PaymentSlice
 });
 
 const persistConfig = {

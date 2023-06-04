@@ -6,7 +6,8 @@ import ScannedPage from '../screen/ScannedPage';
 import ShareableQR from '../screen/ShareableQR';
 import QRScanner from '../screen/BarcodeScanner';
 import SuccessPage from '../screen/SuccessPage';
-
+import AddMoney from '../screen/AddMoney';
+import WithdrawMoney from '../screen/Withdraw';
 
 const Stack = createNativeStackNavigator();
 
@@ -39,7 +40,37 @@ export default function HomeStack() {
                     },
                     headerTitle: 'Payment'
                 }}
-              />      
+              />   
+              <Stack.Screen
+                name="AddMoney"
+                component={AddMoney}
+                options={{
+                    headerShown: true,
+                    headerStyle: {
+                      backgroundColor: '#2CAA38',
+                    },
+                    headerTintColor: '#fff',
+                    headerTitleStyle: {
+                      fontWeight: 'bold',
+                    },
+                    headerTitle: 'Add Money'
+                }}
+              />   
+              <Stack.Screen
+                name="WithdrawMoney"
+                component={WithdrawMoney}
+                options={{
+                    headerShown: true,
+                    headerStyle: {
+                      backgroundColor: '#2CAA38',
+                    },
+                    headerTintColor: '#fff',
+                    headerTitleStyle: {
+                      fontWeight: 'bold',
+                    },
+                    headerTitle: 'Withdraw Money'
+                }}
+              /> 
               <Stack.Screen
                 name="ShareableQR"
                 component={ShareableQR}
