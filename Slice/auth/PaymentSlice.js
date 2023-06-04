@@ -17,7 +17,8 @@ const initialState = {
   addMoneydata: null,
   banksData: null,
   verifyAcc: null,
-  withdrawalData: null
+  withdrawalData: null,
+  transactionHistoryData: null
 };
 
 export const AddMoneyApi = createAsyncThunk(
@@ -149,6 +150,38 @@ export const AddMoneyApi = createAsyncThunk(
     }
   );
 
+  export const TransactionHistoryApi = createAsyncThunk(
+    "transactionHistory/userTransactionHistory",
+    async (_, { rejectWithValue }) => {
+      const tokengot = await AsyncStorage.getItem("token");
+      const infoneeded = `Bearer ${tokengot}`;
+      const instance = axios.create({
+        baseURL: U2K_APIKEY,
+        timeout: 20000,
+  
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: infoneeded
+        },
+      });
+      return await instance
+        .get("/users/wallet/history")
+        .then(async (response) => {
+            // console.log("history ", response.data)
+          return response.data;
+        })
+  
+        .catch((err) => {
+          let errdata = err.response.data;
+          console.log('error ', errdata)
+          Alert.alert(`${errdata?.message}`)
+          return rejectWithValue(errdata);
+          // console.log(err)
+        });
+    }
+  );
+
 
 
   
@@ -221,6 +254,22 @@ export const PaymentSlice = createSlice({
           state.withdrawalData = action.payload;
         })
         .addCase(WithdrawMoneyApi.rejected, (state, action) => {
+          state.isLoading = false;
+          state.isError = true;
+          state.message = action.payload;
+          state.registeruser = false;
+        })
+        .addCase(TransactionHistoryApi.pending, (state) => {
+          state.isLoading = true;
+          state.null = true;
+        })
+        .addCase(TransactionHistoryApi.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.isSuccess = true;
+          state.user = true;
+          state.transactionHistoryData = action.payload;
+        })
+        .addCase(TransactionHistoryApi.rejected, (state, action) => {
           state.isLoading = false;
           state.isError = true;
           state.message = action.payload;
