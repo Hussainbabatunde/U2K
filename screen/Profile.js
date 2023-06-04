@@ -29,7 +29,7 @@ const Profile = ({ navigation }) => {
   const [support, setSupport] = useState(false);
 
   const username = useSelector((state) => state?.GetDetailsSlice?.getUserdata) ?? "";
-  console.log("user status ", username)
+  // console.log("user status ", username)
 
 
   return (

@@ -5,6 +5,7 @@ import Home from '../screen/Home';
 import ScannedPage from '../screen/ScannedPage';
 import ShareableQR from '../screen/ShareableQR';
 import QRScanner from '../screen/BarcodeScanner';
+import SuccessPage from '../screen/SuccessPage';
 
 
 const Stack = createNativeStackNavigator();
@@ -51,6 +52,22 @@ export default function HomeStack() {
                 component={QRScanner}
                 options={{
                   headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="Successful"
+                component={SuccessPage}
+                options={{
+                  headerShown: true,
+                  headerStyle: {
+                    backgroundColor: '#2CAA38',
+                  },
+                  headerTintColor: '#fff',
+                  headerTitleStyle: {
+                    fontWeight: 'bold',
+                  },
+                  headerLeft: null,
+                  headerTitle: 'Successful'
                 }}
               />
               </Stack.Navigator>
