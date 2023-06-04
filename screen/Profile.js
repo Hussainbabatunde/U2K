@@ -15,6 +15,7 @@ import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { reset } from "../Slice/auth/Loginslice";
 import { reset as resetGetDetails } from "../Slice/auth/GetDetails";
+import { reset as resetPaymentSlice } from "../Slice/auth/PaymentSlice";
 
 const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const Profile = ({ navigation }) => {
       console.log("working");
       await dispatch(reset())
       await dispatch(resetGetDetails())
+      await dispatch(resetPaymentSlice())
   };
 
   const [social, setSocial] = useState(false);

@@ -37,12 +37,22 @@ const Home = () =>{
         navigation.navigate('TabNavigation', {screen: 'Transactions'})
     }
     const handlePrint = async () => {
-        navigation.navigate('ShareableQR')
+        navigation.navigate('TabNavigation', {screen: "Home", params:{
+            screen: 'ShareableQR'
+        }})
       }
     
 
       const handleQRScanner = () =>{
-        navigation.navigate("QRScanner")
+        navigation.navigate('TabNavigation', {screen: "Home", params:{
+            screen: 'QRScanner'
+        }})
+      }
+
+      const handleAddMoney = () =>{
+        navigation.navigate('TabNavigation', {screen: "Home", params:{
+            screen: 'AddMoney'
+        }})
       }
 
 
@@ -79,7 +89,7 @@ const Home = () =>{
                 <Text style={{fontSize: 32, fontWeight: 'bold', color:'#2CAA38'}}>You have</Text>
                 <Text style={{fontSize: 32, fontWeight: 'bold', color:'#2CAA38'}}><MaterialCommunityIcons name="currency-ngn" size={30} color='#2CAA38' /> {walletData?.balance}</Text>
                 <View style={{width:'60%', height:1, backgroundColor:"#c3c8c4", marginTop: 60 }}></View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleAddMoney}>
                     <Text style={{fontSize: 22, marginTop: 10, color:'#7f8180'}}>Add money</Text>
                 </TouchableOpacity>
                 <TouchableOpacity>
