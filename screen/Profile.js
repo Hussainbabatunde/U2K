@@ -31,7 +31,8 @@ const Profile = ({ navigation }) => {
   const [support, setSupport] = useState(false);
 
   const username = useSelector((state) => state?.GetDetailsSlice?.getUserdata) ?? "";
-  // console.log("user status ", username)
+  const UserInfo= useSelector((state)=> state.LoginSlice?.logindata)
+  console.log(UserInfo)
 
 
   return (
@@ -47,44 +48,28 @@ const Profile = ({ navigation }) => {
           borderBottomStartRadius: 20,
         }}
       >
-        <View style={{ width: "25%" }}>
-          {/* <Image
+        {/* <View style={{ width: "25%" }}>
+          <Image
             source={require("../../assets/images/profile.jpg")}
             style={{ width: 80, height: 80, borderRadius: 40 }}
-          /> */}
-        </View>
-        <View style={{ width: "75%" }}>
-          <Text style={{ color: "#fff", marginTop: 10 }}>tunde</Text>
+          />
+        </View> */}
+        <View style={{ width: "100%" }}>
+          <Text style={{ color: "#fff", marginTop: 10, fontSize: 25 }}>U2K</Text>
           <View style={{ flexDirection: "row" }}>
             <View style={{ width: "50%" }}>
-              <Text style={{ color: "#fff", marginTop: 4, fontSize: 13 }}>
-                Role
+              <Text style={{ color: "#fff", marginTop: 4, fontSize: 18 }}>
+                Username
               </Text>
               <Text
                 style={{
                   color: "#fff",
                   fontWeight: "bold",
                   marginTop: 4,
-                  fontSize: 13,
+                  fontSize: 18,
                 }}
               >
-                Client
-              </Text>
-            </View>
-            <View style={{ width: "50%" }}>
-              <Text style={{ color: "#fff", marginTop: 4, fontSize: 13 }}>
-                Completed Trips
-              </Text>
-              <Text
-                style={{
-                  color: "#fff",
-                  fontWeight: "bold",
-                  marginTop: 4,
-                  fontSize: 13,
-                  marginLeft: "40%",
-                }}
-              >
-                data
+                {UserInfo?.data?.name}
               </Text>
             </View>
           </View>

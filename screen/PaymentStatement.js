@@ -52,7 +52,8 @@ const PaymentStatement = () =>{
                         <Text style={{color:'red'}}>-{item?.amount}</Text>
                          }
                     </View>
-                    <Text style={{marginTop: 10}}>Username: Mayana Tunde</Text>
+                    {item?.receiver_id != null ? <Text style={{marginTop: 10}}>Receiver: {item?.receiver?.name}</Text> : <Text style={{marginTop: 10}}>Username: {item?.sender?.name}</Text>}
+                    {item?.receiver_id != null ? <Text>Receiver Phone Number: +{item?.receiver?.phone_number}</Text> : <Text>Phone Number: +{item?.sender?.phone_number}</Text>}
                     <Text>Transaction type: {item?.type}</Text>
                     <Text>Date: {moment(item?.created_at).format('YYYY-MM-DD')}</Text>
                     <Text>Time: {moment(item?.created_at).format('h:mm:ss a')}</Text>
