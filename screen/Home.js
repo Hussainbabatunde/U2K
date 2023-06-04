@@ -55,6 +55,12 @@ const Home = () =>{
         }})
       }
 
+      const handleWithdrawMoney = () =>{
+        navigation.navigate('TabNavigation', {screen: "Home", params:{
+            screen: 'WithdrawMoney'
+        }})
+      }
+
 
     return(
         <SafeAreaView style={{flex: 1}}>
@@ -92,7 +98,7 @@ const Home = () =>{
                 <TouchableOpacity onPress={handleAddMoney}>
                     <Text style={{fontSize: 22, marginTop: 10, color:'#7f8180'}}>Add money</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleWithdrawMoney}>
                     <Text style={{fontSize: 22, marginTop: 10, color:'#7f8180'}}>Withdraw your balance</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleStatement}>

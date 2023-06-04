@@ -58,7 +58,6 @@ export const loginAuth = createAsyncThunk(
     async (details, { rejectWithValue }) => {
     //   const tokengot = await AsyncStorage.getItem("token");
     //   const infoneeded = `Bearer ${tokengot}`;
-    console.log(details)
       const instance = axios.create({
         baseURL: U2K_APIKEY,
         timeout: 20000,
@@ -72,7 +71,7 @@ export const loginAuth = createAsyncThunk(
         .post("/users/login", details)
         .then(async (response) => {
           await AsyncStorage.setItem("token", response.data?.extra?.token);
-            // console.log("respone login ", response.data)
+            console.log("respone login ", response.data)
           return response.data;
         })
   
@@ -136,7 +135,7 @@ export const loginAuth = createAsyncThunk(
       return await instance
         .put("/users/pin", details)
         .then(async (response) => {
-            console.log("response register ", response.data)
+            // console.log("response register ", response.data)
           return response.data;
         })
   

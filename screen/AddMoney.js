@@ -24,16 +24,31 @@ const AddMoney = ({route, navigation}) =>{
     const transferStatus = useSelector((state) => state.GetDetailsSlice?.transferData)
     // console.log(data)
     const payUrl = useSelector((state)=> state.PaymentSlice?.addMoneydata)
-    // useEffect(()=>{
-    //     const showing = () =>{
-    //     if(payUrl?.message == "Authorization URL created"  && payUrl !== null){
-    //         setIsModalVisible(true)
-    //     }else{
-    //         setIsModalVisible(false)
-    //     }
-    // }
-    // showing()
-    // },[payUrl])
+    const callback_url = 'https://standard.paystack.co/close';
+
+    onNavigationStateChange = state => {
+   
+      const { url } = state;
+  
+      if (!url) return;
+  
+      if (url === callback_url) {
+              // get transaction reference from url and verify transaction, then redirect
+        // const redirectTo = 'window.location = "' + callback_url + '"';
+        // this.webview.injectJavaScript(redirectTo);        
+        dispatch(resetPaymentSlice())
+        setIsModalVisible(false)
+      }
+          
+          if(url === 'https://standard.paystack.co/close') {
+        // handle webview removal
+        // You can either unmount the component, or
+        // Use a navigator to pop off the viewdispatch(resetPaymentSlice())
+                
+        dispatch(resetPaymentSlice())
+        setIsModalVisible(false)
+      }
+    };
     // const paystackWebViewRef = useRef(paystackProps.PayStackRef); 
 
     const handleChange = (text) => {
@@ -42,11 +57,11 @@ const AddMoney = ({route, navigation}) =>{
       const handleClosePayment = async() =>{
         await dispatch(resetPaymentSlice())
         setIsModalVisible(false)
+        setAmt('')
       }
       const handlePayNow = async () =>{
         const details = {}
         details.amount = amt
-        console.log(details)
         setLoading(true)
         await dispatch(AddMoneyApi(details))
         await dispatch(GetWalletBalanceApi())
@@ -59,7 +74,8 @@ const AddMoney = ({route, navigation}) =>{
 <Modal isVisible={isModalVisible}>
                 <WebView 
                     source={{ uri: payUrl?.data?.authorization_url }}
-                    style={{ marginTop: 40 }}
+                    style={{ marginTop: 40 }}                    
+      onNavigationStateChange={onNavigationStateChange }
                 />
                 <TouchableOpacity style={styles.loginbutton}
             //  onPress={()=> paystackWebViewRef.current.startTransaction()}
