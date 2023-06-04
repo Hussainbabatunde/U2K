@@ -57,7 +57,7 @@ const ScannedPage = ({route, navigation}) =>{
         <View style={{flexDirection:'row', padding: 5, borderWidth: 1, backgroundColor:'white', marginTop: 5, justifyContent:'space-between'}}>
         <MaterialCommunityIcons name="currency-ngn" size={20} color="black" />
         <TextInput 
-        style={{flex: 1}}
+        style={{flex: 1, fontSize: 17}}
             keyboardType="numeric"
             value={amt}               
             returnKeyType="done" 

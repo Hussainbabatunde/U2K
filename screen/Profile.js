@@ -14,6 +14,7 @@ import IonIcon from "react-native-vector-icons/Ionicons";
 import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { reset } from "../Slice/auth/Loginslice";
+import u2kLogo from '../assets/u2k.png'
 import { reset as resetGetDetails } from "../Slice/auth/GetDetails";
 import { reset as resetPaymentSlice } from "../Slice/auth/PaymentSlice";
 
@@ -32,7 +33,7 @@ const Profile = ({ navigation }) => {
 
   const username = useSelector((state) => state?.GetDetailsSlice?.getUserdata) ?? "";
   const UserInfo= useSelector((state)=> state.LoginSlice?.logindata)
-  console.log(UserInfo)
+  // console.log(UserInfo)
 
 
   return (
@@ -48,16 +49,16 @@ const Profile = ({ navigation }) => {
           borderBottomStartRadius: 20,
         }}
       >
-        {/* <View style={{ width: "25%" }}>
+        <View style={{ width: "25%" }}>
           <Image
-            source={require("../../assets/images/profile.jpg")}
+            source={u2kLogo}
             style={{ width: 80, height: 80, borderRadius: 40 }}
           />
-        </View> */}
+        </View>
         <View style={{ width: "100%" }}>
-          <Text style={{ color: "#fff", marginTop: 10, fontSize: 25 }}>U2K</Text>
+          {/* <Text style={{ color: "#fff", marginTop: 10, fontSize: 25 }}>U2K</Text> */}
           <View style={{ flexDirection: "row" }}>
-            <View style={{ width: "50%" }}>
+            <View style={{ width: "50%", marginTop: 15 }}>
               <Text style={{ color: "#fff", marginTop: 4, fontSize: 18 }}>
                 Username
               </Text>

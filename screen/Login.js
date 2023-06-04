@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, ImageBackground, Keyboard, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Image, ImageBackground, Keyboard, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import backgroundimg from '../assets/backgroungimg.jpg'
 import QRCode from "react-qr-code";
 import { Entypo } from '@expo/vector-icons'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAuth } from '../Slice/auth/Loginslice';
+import u2kLogo from '../assets/u2k.png'
 
 
 const Login = ({navigation}) =>{
@@ -47,6 +48,7 @@ const Login = ({navigation}) =>{
         <Pressable onPress={Keyboard.dismiss}style={{flex: 1, backgroundColor: "#25C166"}}>
             {/* <ImageBackground source={backgroundimg} resizeMode="cover" style={styles.child}> */}
                 <View style={styles.coverchild}>
+                    <Image source={u2kLogo}  />
              <View style={{width:'100%'}}>
              <Text style={{color:"white"}}>Phone Number</Text>
              <TextInput onChangeText={setPhoneNumber} style={styles.container} />
@@ -58,7 +60,8 @@ const Login = ({navigation}) =>{
              <View style={{ flexDirection: 'row', justifyContent:'center', alignItems:'center',
         borderBottomWidth: 1,
         borderColor: '#cfd1d5'}}>
-                <TextInput onChangeText={setPassword} style={styles.password} />
+                <TextInput                
+                     secureTextEntry={true} onChangeText={setPassword} style={styles.password} />
                 <Entypo name="eye" size={24} color="#cfd1d5" />
              </View>
              </View>
@@ -85,13 +88,15 @@ const styles= StyleSheet.create({
         borderColor: '#cfd1d5',
         fontSize: 18,
         padding: 5,
-        paddingBottom: 10
+        paddingBottom: 10,
+        color:'white'
     },
     password:{
         fontSize: 18,
         padding: 5,
         paddingBottom: 10,
-        flex: 1
+        flex: 1,
+        color:'white'
     },
     child:{
         // width: "100%",
